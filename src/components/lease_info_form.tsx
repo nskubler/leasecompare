@@ -1,8 +1,7 @@
 import '@mantine/dates/styles.css';
 import {Select, NumberInput, Button, Group } from '@mantine/core';
-import { DatePickerInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
-import { calculateNPV } from '../util/calulate_npv';
+import { calculateNPV } from '../util/lease_calc';
 import { ExpenseStructure, LeaseInfo } from '../types';
 
 export default function LeaseInfoForm() {
@@ -16,8 +15,7 @@ export default function LeaseInfoForm() {
       inflationRate: values.inflationRate * .01,
     }
 
-    alert(calculateNPV(pValues.rentalArea, pValues.leaseTerm, pValues.baseRent, pValues.escalations, 
-      pValues.tenantImprovementAllowance, pValues.inflationRate, pValues.totalOperatingExpenses, pValues.expenseStructure));
+    alert(calculateNPV(pValues));
   };
 
   return (
@@ -36,12 +34,6 @@ export default function LeaseInfoForm() {
         min={0}
         thousandSeparator=','
         {...leaseInfoForm.getInputProps('leaseTerm')}
-      />
-
-      <DatePickerInput
-        label="Commencement Date"
-        placeholder="Select date"
-        {...leaseInfoForm.getInputProps('commencementDate')}
       />
 
       <NumberInput

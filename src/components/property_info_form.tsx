@@ -1,5 +1,6 @@
 import { PropertyInfo } from "../types";
 import { useForm } from "@mantine/form";
+import { DatePickerInput } from "@mantine/dates";
 import { Button, Flex, Group, Select, TextInput, Title } from "@mantine/core";
 import { useState } from "react";
 
@@ -13,20 +14,11 @@ export default function PropertyInfoForm() {
     ];
 
     const propertyInfoForm = useForm<PropertyInfo>({
-        initialValues: {
-            buildingName: '',
-            analysisType: '',
-            assetType: '',
-            addressLine1: '',
-            addressLine2: '',
-            city: '',
-            state: '',
-            zip: ''
-        },
         validate: {
             buildingName: (value) => (/^[A-Za-z0-9\s\-,.&'()#]+$/.test(value) ? null : "Invalid building name"),
             analysisType: (value) => (value !== '' ? null : "Please select an analysis type"),
             assetType: (value) => (value !== '' ? null : "Please select an asset type"),
+            commencementDate: (value => value !== null ? null : "Please select a commencement date"),
             addressLine1: (value) => (/^[A-Za-z0-9\s\-,.#'()/]+$/.test(value) ? null : "Please enter a valid address"),
             addressLine2: (value) => (/^$|^[A-Za-z0-9\s\-,.#'()/]+$/.test(value) ? null : "Please enter a valid address"),
             city: (value) => (/^[A-Za-z\s\-']{2,100}$/.test(value) ? null : "Please enter a valid city"),
@@ -38,7 +30,9 @@ export default function PropertyInfoForm() {
     const [isEditing, setIsEditing] = useState<boolean>(true);
 
     return isEditing ? (
-        <form onSubmit={propertyInfoForm.onSubmit(() => setIsEditing(false) )}>
+        <form onSubmit={propertyInfoForm.onSubmit((values) => {
+            setIsEditing(false);
+        })}>
             <TextInput
                 label="Building Name"
                 placeholder="Enter building name"
@@ -57,6 +51,12 @@ export default function PropertyInfoForm() {
                 placeholder="Select asset type"
                 data={['Office', 'Industrial', 'Flex', 'Retail']}
                 {...propertyInfoForm.getInputProps('assetType')}
+            />
+
+            <DatePickerInput
+                label="Commencement Date"
+                placeholder="Select date"
+                {...propertyInfoForm.getInputProps('commencementDate')}
             />
 
             <TextInput

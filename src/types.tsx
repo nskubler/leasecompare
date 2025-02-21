@@ -4,6 +4,7 @@ export type PropertyInfo = {
     buildingName: string;
     analysisType: string;
     assetType: string;
+    commencementDate: Date;
     addressLine1: string;
     addressLine2: string;
     city: string;
@@ -14,13 +15,11 @@ export type PropertyInfo = {
 export type LeaseInfo = {
     rentalArea: number;
     leaseTerm: number;
-    commencementDate: Date;
     baseRent: number;
     escalations: number;
     freeRent: number;
     tenantImprovementAllowance: number;
-    expenseStructure: ExpenseStructure;
-    totalOperatingExpenses: number;
-    baseYearAmount: number;
+    operatingExpenses: number;
     inflationRate: number;
+    expenseStructure: ExpenseStructure;
   }
