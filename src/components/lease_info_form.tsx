@@ -1,25 +1,28 @@
 import '@mantine/dates/styles.css';
-import {Select, NumberInput, Button, Group } from '@mantine/core';
+import { Select, NumberInput, Button, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { calculateNPV } from '../util/lease_calc';
 import { ExpenseStructure, LeaseInfo } from '../types';
 
-export default function LeaseInfoForm() {
+interface Props {
+  onLeaseInfoSubmission: (info: LeaseInfo) => void;
+}
 
-  const leaseInfoForm = useForm<LeaseInfo>();
+export default function LeaseInfoForm({ onLeaseInfoSubmission }: Props) {
 
-  const handleSubmit = (values: LeaseInfo) => {
+  const handleLeaseInfoSubmission = (values: LeaseInfo) => {
     const pValues = {
       ...values,
       escalations: values.escalations * .01,
       inflationRate: values.inflationRate * .01,
     }
-
-    alert(calculateNPV(pValues));
+    onLeaseInfoSubmission(pValues);
   };
 
+  const leaseInfoForm = useForm<LeaseInfo>();
+
   return (
-    <form onSubmit={leaseInfoForm.onSubmit(handleSubmit)}>
+    <form onSubmit={leaseInfoForm.onSubmit(handleLeaseInfoSubmission)}>
       <NumberInput
         label="Rental Area (SF)"
         placeholder="Enter total square footage"
