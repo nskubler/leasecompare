@@ -1,6 +1,6 @@
 # leasecompare
 
-A webapp to help compare leases.
+NOW DEFUNCT. A webapp to help compare leases. I may return to this in the future to try out Vue and Tailwind.
 
 ## Getting started
 
